@@ -1,6 +1,6 @@
 import express, { NextFunction, Request, Response } from 'express';
 import httpStatus from 'http-status';
-import { academicSemestersRoutes } from '../modules/academicSemister/academicSemister.route';
+import { academicSemestersRoutes } from '../modules/academicSemester/academicSemester.route';
 
 const router = express.Router();
 

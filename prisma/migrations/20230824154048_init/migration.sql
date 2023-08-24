@@ -1,5 +1,5 @@
 -- CreateTable
-CREATE TABLE "academic_semister" (
+CREATE TABLE "academic_semester" (
     "id" TEXT NOT NULL,
     "year" INTEGER NOT NULL,
     "title" TEXT NOT NULL,
@@ -9,7 +9,7 @@ CREATE TABLE "academic_semister" (
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
-    CONSTRAINT "academic_semister_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "academic_semester_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -79,7 +79,7 @@ CREATE TABLE "faculties" (
 ALTER TABLE "academic_depertment" ADD CONSTRAINT "academic_depertment_academicFacultyId_fkey" FOREIGN KEY ("academicFacultyId") REFERENCES "academic_faculty"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "students" ADD CONSTRAINT "students_academicSemesterId_fkey" FOREIGN KEY ("academicSemesterId") REFERENCES "academic_semister"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "students" ADD CONSTRAINT "students_academicSemesterId_fkey" FOREIGN KEY ("academicSemesterId") REFERENCES "academic_semester"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "students" ADD CONSTRAINT "students_academicDapertmentId_fkey" FOREIGN KEY ("academicDapertmentId") REFERENCES "academic_depertment"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

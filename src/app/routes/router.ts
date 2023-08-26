@@ -1,5 +1,6 @@
 import express, { NextFunction, Request, Response } from 'express';
 import httpStatus from 'http-status';
+import { academicSemestersRoutes } from '../modules/academicSemester/academicSemester.route';
 
 const router = express.Router();
 
@@ -7,7 +8,8 @@ router.get('/health', (_req, res) => {
 	res.json({ message: 'All ok' });
 });
 
-// router.use('/');
+router.use('/academic-semesters', academicSemestersRoutes);
+// router.use('/academic-departments', academicDepartmentsRoutes);
 
 // not found route
 router.use((req: Request, res: Response, next: NextFunction) => {

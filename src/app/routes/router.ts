@@ -9,6 +9,7 @@ router.get('/health', (_req, res) => {
 });
 
 router.use('/academic-semesters', academicSemestersRoutes);
+// router.use('/academic-departments', academicDepartmentsRoutes);
 
 // not found route
 router.use((req: Request, res: Response, next: NextFunction) => {

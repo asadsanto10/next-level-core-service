@@ -1,11 +1,10 @@
-import { AcademicSemester, Prisma, PrismaClient } from '@prisma/client';
+import { AcademicSemester, Prisma } from '@prisma/client';
 import calculatePagination from '../../../helpers/pagination.helper';
 import { IGenericResponse } from '../../../interface/common';
 import { IPageOtions } from '../../../interface/pagination';
+import prisma from '../../../shared/prisma';
 import { IAcademicSemeterFilterRequest } from './academicSemester.interface';
 import { AcademicSemesterSearchAbleFields } from './academicSemester.variable';
-
-const prisma = new PrismaClient();
 
 const createSemester = async (data: AcademicSemester): Promise<AcademicSemester> => {
 	const result = await prisma.academicSemester.create({
@@ -48,6 +47,7 @@ const getAllAcademicSemesters = async (
 			})),
 		});
 	}
+
 	if (Object.keys(filterData).length > 0) {
 		andCondition.push({
 			AND: Object.entries(filterData).map(([field, value]) => ({ [field]: { equals: value } })),
@@ -76,4 +76,14 @@ const getAllAcademicSemesters = async (
 	};
 };
 
-export const academicSemestersService = { createSemester, getAllAcademicSemesters };
+const getAcademicSemesterById = async (id: string): Promise<AcademicSemester | null> => {
+	const result = await prisma.academicSemester.findUnique({ where: { id } });
+
+	return result;
+};
+
+export const academicSemestersService = {
+	createSemester,
+	getAllAcademicSemesters,
+	getAcademicSemesterById,
+};

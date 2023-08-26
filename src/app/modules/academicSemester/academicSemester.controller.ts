@@ -43,3 +43,20 @@ export const getAllAcademicSemesters: RequestHandler = async (req, res, next): P
 		next(error);
 	}
 };
+
+export const getAcademicSemesterById: RequestHandler = async (req, res, next): Promise<void> => {
+	try {
+		const { id } = req.params;
+
+		const result = await academicSemestersService.getAcademicSemesterById(id);
+
+		sendResponse<AcademicSemester>(res, {
+			statusCode: httpStatus.OK,
+			status: 'success',
+			message: 'semester fetch successfully',
+			data: result,
+		});
+	} catch (error) {
+		next(error);
+	}
+};

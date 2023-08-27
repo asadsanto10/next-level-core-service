@@ -6,8 +6,8 @@ import sendResponse from '../../../shared/sendResponse';
 import { academicFacultyService } from './academicFaculty.service';
 // prettier-ignore
 import {
-  academicFacultyFilterableFields,
-  academicFacultyOptions,
+	academicFacultyFilterableFields,
+	academicFacultyOptions,
 } from './academicFaculty.variable';
 
 export const createFaculty: RequestHandler = async (req, res, next): Promise<void> => {
@@ -55,6 +55,41 @@ export const getAcademicFacultyById: RequestHandler = async (req, res, next): Pr
 			statusCode: httpStatus.OK,
 			status: 'success',
 			message: 'faculty fetch successfully',
+			data: result,
+		});
+	} catch (error) {
+		next(error);
+	}
+};
+
+export const updateFaculty: RequestHandler = async (req, res, next): Promise<void> => {
+	try {
+		const { id } = req.params;
+		const data = req.body as Partial<AcademicFaculty>;
+
+		const result = await academicFacultyService.updateFaculty(id, data);
+
+		sendResponse<AcademicFaculty>(res, {
+			statusCode: httpStatus.OK,
+			status: 'success',
+			message: 'faculty update successfully',
+			data: result,
+		});
+	} catch (error) {
+		next(error);
+	}
+};
+
+export const deleteFaculty: RequestHandler = async (req, res, next): Promise<void> => {
+	try {
+		const { id } = req.params;
+
+		const result = await academicFacultyService.deleteFaculty(id);
+
+		sendResponse<AcademicFaculty>(res, {
+			statusCode: httpStatus.OK,
+			status: 'success',
+			message: 'faculty delete successfully',
 			data: result,
 		});
 	} catch (error) {

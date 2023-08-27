@@ -57,3 +57,38 @@ export const getStudentById: RequestHandler = async (req, res, next): Promise<vo
 		next(error);
 	}
 };
+
+export const updateStudent: RequestHandler = async (req, res, next): Promise<void> => {
+	try {
+		const { id } = req.params;
+		const data = req.body as Partial<Student>;
+
+		const result = await studentService.updateStudent(id, data);
+
+		sendResponse<Student>(res, {
+			statusCode: httpStatus.OK,
+			status: 'success',
+			message: 'Student update successfully',
+			data: result,
+		});
+	} catch (error) {
+		next(error);
+	}
+};
+
+export const deleteStudent: RequestHandler = async (req, res, next): Promise<void> => {
+	try {
+		const { id } = req.params;
+
+		const result = await studentService.deleteStudent(id);
+
+		sendResponse<Student>(res, {
+			statusCode: httpStatus.OK,
+			status: 'success',
+			message: 'Student delete successfully',
+			data: result,
+		});
+	} catch (error) {
+		next(error);
+	}
+};

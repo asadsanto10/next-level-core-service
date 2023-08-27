@@ -60,3 +60,38 @@ export const getAcademicSemesterById: RequestHandler = async (req, res, next): P
 		next(error);
 	}
 };
+
+export const updateSemester: RequestHandler = async (req, res, next): Promise<void> => {
+	try {
+		const { id } = req.params;
+		const data = req.body as Partial<AcademicSemester>;
+
+		const result = await academicSemestersService.updateSemester(id, data);
+
+		sendResponse<AcademicSemester>(res, {
+			statusCode: httpStatus.OK,
+			status: 'success',
+			message: 'semester update successfully',
+			data: result,
+		});
+	} catch (error) {
+		next(error);
+	}
+};
+
+export const deleteSemester: RequestHandler = async (req, res, next): Promise<void> => {
+	try {
+		const { id } = req.params;
+
+		const result = await academicSemestersService.deleteSemester(id);
+
+		sendResponse<AcademicSemester>(res, {
+			statusCode: httpStatus.OK,
+			status: 'success',
+			message: 'semester delete successfully',
+			data: result,
+		});
+	} catch (error) {
+		next(error);
+	}
+};

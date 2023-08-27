@@ -57,3 +57,38 @@ export const getfacultyById: RequestHandler = async (req, res, next): Promise<vo
 		next(error);
 	}
 };
+
+export const updateFaculty: RequestHandler = async (req, res, next): Promise<void> => {
+	try {
+		const { id } = req.params;
+		const data = req.body as Partial<Faculty>;
+
+		const result = await facultyService.updateFaculty(id, data);
+
+		sendResponse<Faculty>(res, {
+			statusCode: httpStatus.OK,
+			status: 'success',
+			message: 'Faculty update successfully',
+			data: result,
+		});
+	} catch (error) {
+		next(error);
+	}
+};
+
+export const deleteFaculty: RequestHandler = async (req, res, next): Promise<void> => {
+	try {
+		const { id } = req.params;
+
+		const result = await facultyService.deleteFaculty(id);
+
+		sendResponse<Faculty>(res, {
+			statusCode: httpStatus.OK,
+			status: 'success',
+			message: 'Faculty delete successfully',
+			data: result,
+		});
+	} catch (error) {
+		next(error);
+	}
+};

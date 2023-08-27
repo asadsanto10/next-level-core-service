@@ -18,7 +18,7 @@ export const createDepartment: RequestHandler = async (req, res, next): Promise<
 		sendResponse<AcademicDepartment>(res, {
 			statusCode: httpStatus.OK,
 			status: 'success',
-			message: 'AcademicDepartment create successfully',
+			message: 'Academic department create successfully',
 			data: result,
 		});
 	} catch (error) {
@@ -55,6 +55,41 @@ export const getAcademicDepartmentById: RequestHandler = async (req, res, next):
 			statusCode: httpStatus.OK,
 			status: 'success',
 			message: 'AcademicDepartment fetch successfully',
+			data: result,
+		});
+	} catch (error) {
+		next(error);
+	}
+};
+
+export const updateDepartment: RequestHandler = async (req, res, next): Promise<void> => {
+	try {
+		const { id } = req.params;
+		const data = req.body as Partial<AcademicDepartment>;
+
+		const result = await academicDepartmentService.updateDepartment(id, data);
+
+		sendResponse<AcademicDepartment>(res, {
+			statusCode: httpStatus.OK,
+			status: 'success',
+			message: 'AcademicDepartment update successfully',
+			data: result,
+		});
+	} catch (error) {
+		next(error);
+	}
+};
+
+export const deleteDepartment: RequestHandler = async (req, res, next): Promise<void> => {
+	try {
+		const { id } = req.params;
+
+		const result = await academicDepartmentService.deleteDepartment(id);
+
+		sendResponse<AcademicDepartment>(res, {
+			statusCode: httpStatus.OK,
+			status: 'success',
+			message: 'Academic department delete successfully',
 			data: result,
 		});
 	} catch (error) {

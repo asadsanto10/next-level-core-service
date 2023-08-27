@@ -3,7 +3,9 @@ import httpStatus from 'http-status';
 import { academicDepartmentsRoutes } from '../modules/academicDepartment/academicDepartment.route';
 import { academicFacultyRoutes } from '../modules/academicFaculty/academicFaculty.route';
 import { academicSemestersRoutes } from '../modules/academicSemester/academicSemester.route';
+import { buildingRoutes } from '../modules/building/building.routes';
 import { facultyRoutes } from '../modules/faculty/faculty.routes';
+import { roomRoutes } from '../modules/room/room.routes';
 import { studentRoutes } from '../modules/student/studentRoute';
 
 const router = express.Router();
@@ -17,6 +19,9 @@ router.use('/academic-faculties', academicFacultyRoutes);
 router.use('/academic-departments', academicDepartmentsRoutes);
 router.use('/faculties', facultyRoutes);
 router.use('/students', studentRoutes);
+router.use('/buildings', buildingRoutes);
+router.use('/rooms', roomRoutes);
+// router.use('/courses', studentRoutes);
 
 // not found route
 router.use((req: Request, res: Response, next: NextFunction) => {

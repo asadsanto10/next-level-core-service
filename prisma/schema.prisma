@@ -1,6 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -18,7 +15,7 @@ model AcademicSemester {
   startMonth String
   endMonth   String
   createdAt  DateTime  @default(now())
-  updatedAt  DateTime  @updatedAt()
+  updatedAt  DateTime  @updatedAt
   students   Student[]
 
   @@map("academic_semester")
@@ -28,24 +25,24 @@ model AcademicFaculty {
   id                 String               @id @default(uuid())
   title              String
   createdAt          DateTime             @default(now())
-  updatedAt          DateTime             @updatedAt()
-  AcademicDepertment AcademicDepertment[]
-  students           Student[]
+  updatedAt          DateTime             @updatedAt
+  academicDepartment AcademicDepartment[]
   facultys           Faculty[]
+  students           Student[]
 
   @@map("academic_faculty")
 }
 
-model AcademicDepertment {
+model AcademicDepartment {
   id        String   @id @default(uuid())
   title     String
   createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt()
+  updatedAt DateTime @updatedAt
 
-  academicFaculty   AcademicFaculty @relation(fields: [academicFacultyId], references: [id])
   academicFacultyId String
-  students          Student[]
+  academicFaculty   AcademicFaculty @relation(fields: [academicFacultyId], references: [id])
   facultys          Faculty[]
+  students          Student[]
 
   @@map("academic_depertment")
 }
@@ -62,16 +59,16 @@ model Student {
   gender       String
   bloodGroup   String
   createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt()
+  updatedAt    DateTime @updatedAt
 
-  academicSemester   AcademicSemester @relation(fields: [academicSemesterId], references: [id])
   academicSemesterId String
+  academicSemester   AcademicSemester @relation(fields: [academicSemesterId], references: [id])
 
-  academicDepartment   AcademicDepertment @relation(fields: [academicDapertmentId], references: [id])
-  academicDapertmentId String
+  academicDepartmentId String
+  academicDepartment   AcademicDepartment @relation(fields: [academicDepartmentId], references: [id])
 
-  academicFaculty   AcademicFaculty @relation(fields: [academicFacultyId], references: [id])
   academicFacultyId String
+  academicFaculty   AcademicFaculty @relation(fields: [academicFacultyId], references: [id])
 
   @@map("students")
 }
@@ -91,11 +88,34 @@ model Faculty {
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
 
-  academicDepartment   AcademicDepertment @relation(fields: [academicDepartmentId], references: [id])
   academicDepartmentId String
-
-  academicFaculty   AcademicFaculty @relation(fields: [academicFacultyId], references: [id])
-  academicFacultyId String
+  academicFacultyId    String
+  academicDepartment   AcademicDepartment @relation(fields: [academicDepartmentId], references: [id])
+  academicFaculty      AcademicFaculty    @relation(fields: [academicFacultyId], references: [id])
 
   @@map("faculties")
+}
+
+model Building {
+  id        String   @id @default(uuid())
+  title     String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  rooms     Room[]
+
+  @@map("buildings")
+}
+
+model Room {
+  id         String @id @default(uuid())
+  roomNumber String
+  floor      String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  buildingId String
+  building   Building @relation(fields: [buildingId], references: [id])
+
+  @@map("rooms")
 }

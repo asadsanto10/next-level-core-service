@@ -59,23 +59,23 @@ export const getCourceById: RequestHandler = async (req, res, next): Promise<voi
 	}
 };
 
-// export const updateCource: RequestHandler = async (req, res, next): Promise<void> => {
-// 	try {
-// 		const { id } = req.params;
-// 		const data = req.body as Partial<Building>;
+export const updateCource: RequestHandler = async (req, res, next): Promise<void> => {
+	try {
+		const { id } = req.params;
+		const data = req.body as Partial<ICourseCreateData>;
 
-// 		const result = await courceService.updateCource(id, data);
+		const result = await courceService.updateCource(id, data);
 
-// 		sendResponse<Course>(res, {
-// 			statusCode: httpStatus.OK,
-// 			status: 'success',
-// 			message: 'Course update successfully',
-// 			data: result,
-// 		});
-// 	} catch (error) {
-// 		next(error);
-// 	}
-// };
+		sendResponse<Course>(res, {
+			statusCode: httpStatus.OK,
+			status: 'success',
+			message: 'Course update successfully',
+			data: result,
+		});
+	} catch (error) {
+		next(error);
+	}
+};
 
 export const deleteCource: RequestHandler = async (req, res, next): Promise<void> => {
 	try {

@@ -1,6 +1,6 @@
 /* eslint-disable no-await-in-loop */
 /* eslint-disable no-plusplus */
-import { Course, Prisma } from '@prisma/client';
+import { Course, CourseFaculty, Prisma } from '@prisma/client';
 import httpStatus from 'http-status';
 import ApiError from '../../../errors/apiError';
 import calculatePagination from '../../../helpers/pagination.helper';
@@ -291,10 +291,60 @@ const deleteCource = async (id: string): Promise<Course> => {
 	return result;
 };
 
+const assignFaculties = async (
+	courseId: string,
+	payload: Array<string>
+): Promise<CourseFaculty[]> => {
+	await prisma.courseFaculty.createMany({
+		data: payload?.map((facultyId) => ({
+			courseId,
+			facultyId,
+		})),
+	});
+
+	const result = prisma.courseFaculty.findMany({
+		where: {
+			courseId,
+		},
+		include: {
+			faculty: true,
+		},
+	});
+
+	return result;
+};
+
+const removeFaculties = async (
+	courseId: string,
+	payload: Array<string>
+): Promise<CourseFaculty[] | null> => {
+	await prisma.courseFaculty.deleteMany({
+		where: {
+			courseId,
+			facultyId: {
+				in: payload,
+			},
+		},
+	});
+
+	const result = prisma.courseFaculty.findMany({
+		where: {
+			courseId,
+		},
+		include: {
+			faculty: true,
+		},
+	});
+
+	return result;
+};
+
 export const courceService = {
 	createCourse,
 	getAllCources,
 	getCourceById,
 	updateCource,
 	deleteCource,
+	assignFaculties,
+	removeFaculties,
 };

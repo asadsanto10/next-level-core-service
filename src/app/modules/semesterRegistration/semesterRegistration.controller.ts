@@ -58,6 +58,24 @@ export const getByIdSemesterReg: RequestHandler = async (req, res, next): Promis
 	}
 };
 
+export const updateSemesterReg: RequestHandler = async (req, res, next): Promise<void> => {
+	try {
+		const { id } = req.params;
+		const data = req.body as Partial<SemesterRegistration>;
+
+		const result = await semesterRegiService.updateSemesterReg(id, data);
+
+		sendResponse<SemesterRegistration>(res, {
+			statusCode: httpStatus.OK,
+			status: 'success',
+			message: 'Semester Registration update successfully',
+			data: result,
+		});
+	} catch (error) {
+		next(error);
+	}
+};
+
 export const deleteSemesterReg: RequestHandler = async (req, res, next): Promise<void> => {
 	try {
 		const { id } = req.params;

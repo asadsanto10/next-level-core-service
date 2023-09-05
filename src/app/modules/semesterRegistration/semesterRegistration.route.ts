@@ -9,6 +9,7 @@ import {
   deleteSemesterReg,
   getAllSemesterReg,
   getByIdSemesterReg,
+  updateSemesterReg,
 } from './semesterRegistration.controller';
 
 import { semesterRegistrationValidation } from './semesterRegistration.validation';
@@ -23,6 +24,13 @@ router.post(
 	validateRequest(semesterRegistrationValidation.semesterRegistrarionCreate),
 	auth(ENUM_USER_ROLE.SUPER_ADMIN, ENUM_USER_ROLE.ADMIN),
 	createSemesterReg
+);
+
+router.patch(
+	'/:id',
+	validateRequest(semesterRegistrationValidation.semesterRegistrarionUpdate),
+	auth(ENUM_USER_ROLE.SUPER_ADMIN, ENUM_USER_ROLE.ADMIN),
+	updateSemesterReg
 );
 
 router.delete('/:id', auth(ENUM_USER_ROLE.SUPER_ADMIN, ENUM_USER_ROLE.ADMIN), deleteSemesterReg);

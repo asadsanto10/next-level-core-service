@@ -1,4 +1,4 @@
-import { Faculty } from '@prisma/client';
+import { CourseFaculty, Faculty } from '@prisma/client';
 import { RequestHandler } from 'express';
 import httpStatus from 'http-status';
 import pick from '../../../shared/pick';
@@ -86,6 +86,40 @@ export const deleteFaculty: RequestHandler = async (req, res, next): Promise<voi
 			statusCode: httpStatus.OK,
 			status: 'success',
 			message: 'Faculty delete successfully',
+			data: result,
+		});
+	} catch (error) {
+		next(error);
+	}
+};
+
+export const assignCourses: RequestHandler = async (req, res, next): Promise<void> => {
+	try {
+		const data = req.body?.courses as Array<string>;
+		const { facultyId } = req.params;
+
+		const result = await facultyService.assignCourses(facultyId, data);
+
+		sendResponse<CourseFaculty[]>(res, {
+			statusCode: httpStatus.OK,
+			status: 'success',
+			message: 'Course faculty assigned successfully',
+			data: result,
+		});
+	} catch (error) {
+		next(error);
+	}
+};
+
+export const removeCourses: RequestHandler = async (req, res, next): Promise<void> => {
+	try {
+		const data = req.body?.courses as Array<string>;
+		const { facultyId } = req.params;
+		const result = await facultyService.removeCourses(facultyId, data);
+		sendResponse<CourseFaculty[]>(res, {
+			statusCode: httpStatus.OK,
+			status: 'success',
+			message: 'Course faculty remove successfully',
 			data: result,
 		});
 	} catch (error) {

@@ -4,10 +4,12 @@ import auth from '../../middlewares/auth/auth.middleware';
 import { validateRequest } from '../../middlewares/validateRequest/validateRequest';
 // prettier-ignore
 import {
+  assignCourses,
   createFaculty,
   deleteFaculty,
   getAllfacultys,
   getfacultyById,
+  removeCourses,
   updateFaculty,
 } from './faculty.controller';
 import { facultyValidation } from './faculty.validation';
@@ -27,4 +29,19 @@ router.patch(
 	updateFaculty
 );
 router.delete('/:id', auth(ENUM_USER_ROLE.SUPER_ADMIN, ENUM_USER_ROLE.ADMIN), deleteFaculty);
+
+// assign-courses
+router.post(
+	'/:facultyId/assign-courses',
+	auth(ENUM_USER_ROLE.SUPER_ADMIN, ENUM_USER_ROLE.ADMIN),
+	validateRequest(facultyValidation.assignOrRemoveCourses),
+	assignCourses
+);
+
+router.delete(
+	'/:facultyId/remove-courses',
+	auth(ENUM_USER_ROLE.SUPER_ADMIN, ENUM_USER_ROLE.ADMIN),
+	removeCourses
+);
+
 export const facultyRoutes = router;

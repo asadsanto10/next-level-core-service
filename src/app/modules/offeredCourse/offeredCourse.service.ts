@@ -166,7 +166,7 @@ const deleteOfferedCourse = async (id: string): Promise<OfferedCourse> => {
 	return result;
 };
 
-export const offeredService = {
+export const offeredCourseService = {
 	createOfferedCourse,
 	getAllOfferedCourse,
 	getByIdOfferedCourse,

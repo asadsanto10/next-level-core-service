@@ -6,6 +6,7 @@ import { academicSemestersRoutes } from '../modules/academicSemester/academicSem
 import { buildingRoutes } from '../modules/building/building.routes';
 import { courseRoutes } from '../modules/course/course.routes';
 import { facultyRoutes } from '../modules/faculty/faculty.routes';
+import { offeredCourseRoutes } from '../modules/offeredCourse/offeredCourse.routes';
 import { roomRoutes } from '../modules/room/room.routes';
 import { semesterRegistrationRoutes } from '../modules/semesterRegistration/semesterRegistration.route';
 import { studentRoutes } from '../modules/student/studentRoute';
@@ -25,6 +26,7 @@ router.use('/buildings', buildingRoutes);
 router.use('/rooms', roomRoutes);
 router.use('/courses', courseRoutes);
 router.use('/semester-registration', semesterRegistrationRoutes);
+router.use('/offered-courses', offeredCourseRoutes);
 
 // not found route
 router.use((req: Request, res: Response, next: NextFunction) => {
